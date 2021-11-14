@@ -32,12 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
 
   List<GButton> tabs = new List();
-  List<Color> colors = [
-    Colors.purple,
-    Colors.pink,
-    Colors.amber[600],
-    Colors.teal
-  ];
+  List<Color> colors = [Colors.purple, Colors.pink, Colors.amber[600], Colors.teal];
 
   @override
   void initState() {
@@ -55,14 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Container(
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
-                    spreadRadius: -10,
-                    blurRadius: 60,
-                    color: Colors.black.withOpacity(.20),
-                    offset: Offset(0, 15))
+                    spreadRadius: -10, blurRadius: 60, color: Colors.black.withOpacity(.20), offset: Offset(0, 15))
               ]),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 25),
                 child: GNav(
                     gap: 8,
                     color: Colors.grey[800],
@@ -73,7 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     duration: Duration(milliseconds: 1000),
                     tabs: [
                       GButton(
-                        icon: LineIcons.home,
+                        leading: Icon(Icons.access_alarm_outlined),
+                        activeLeading: Icon(Icons.access_alarm),
                         text: 'Home',
                       ),
                       GButton(

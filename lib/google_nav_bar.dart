@@ -3,6 +3,7 @@ library google_nav_bar;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'measure_size.dart';
 
 class GNav extends StatefulWidget {
   const GNav({
@@ -76,8 +77,7 @@ class _GNavState extends State<GNav> {
                       key: t.key,
                       border: t.border ?? widget.tabBorder,
                       shadow: t.shadow ?? widget.tabShadow,
-                      borderRadius: t.borderRadius ??
-                          const BorderRadius.all(Radius.circular(100.0)),
+                      borderRadius: t.borderRadius ?? const BorderRadius.all(Radius.circular(100.0)),
                       debug: widget.debug ?? false,
                       margin: t.margin ?? widget.tabMargin,
                       active: selectedIndex == widget.tabs.indexOf(t),
@@ -91,14 +91,11 @@ class _GNavState extends State<GNav> {
                       text: t.text,
                       icon: t.icon,
                       leading: t.leading,
+                      activeLeading: t.activeLeading,
                       curve: widget.curve ?? Curves.ease,
-                      backgroundGradient:
-                          t.backgroundGradient ?? widget.tabBackgroundGradient,
-                      backgroundColor: t.backgroundColor ??
-                          widget.tabBackgroundColor ??
-                          Colors.transparent,
-                      duration:
-                          widget.duration ?? const Duration(milliseconds: 500),
+                      backgroundGradient: t.backgroundGradient ?? widget.tabBackgroundGradient,
+                      backgroundColor: t.backgroundColor ?? widget.tabBackgroundColor ?? Colors.transparent,
+                      duration: widget.duration ?? const Duration(milliseconds: 500),
                       onPressed: () {
                         if (!clickable) return;
                         setState(() {
@@ -107,9 +104,7 @@ class _GNavState extends State<GNav> {
                         });
                         widget.onTabChange(selectedIndex);
 
-                        Future.delayed(
-                            widget.duration ??
-                                const Duration(milliseconds: 500), () {
+                        Future.delayed(widget.duration ?? const Duration(milliseconds: 500), () {
                           setState(() {
                             clickable = true;
                           });
@@ -139,36 +134,40 @@ class GButton extends StatefulWidget {
   final Curve curve;
   final Gradient backgroundGradient;
   final Widget leading;
+  final Widget activeLeading;
   final BorderRadius borderRadius;
   final Border border;
   final List<BoxShadow> shadow;
   final String semanticLabel;
+  final Function onAnimationCompleted;
 
-  const GButton({
-    Key key,
-    this.active,
-    this.backgroundColor,
-    this.icon,
-    this.iconColor,
-    this.iconActiveColor,
-    this.text = '',
-    this.textColor,
-    this.padding,
-    this.margin,
-    this.duration,
-    this.debug,
-    this.gap,
-    this.curve,
-    this.textStyle,
-    this.iconSize,
-    this.leading,
-    this.onPressed,
-    this.backgroundGradient,
-    this.borderRadius,
-    this.border,
-    this.shadow,
-    this.semanticLabel,
-  }) : super(key: key);
+  const GButton(
+      {Key key,
+      this.active,
+      this.backgroundColor,
+      this.icon,
+      this.iconColor,
+      this.iconActiveColor,
+      this.text = '',
+      this.textColor,
+      this.padding,
+      this.margin,
+      this.duration,
+      this.debug,
+      this.gap,
+      this.curve,
+      this.textStyle,
+      this.iconSize,
+      this.leading,
+      this.activeLeading,
+      this.onPressed,
+      this.backgroundGradient,
+      this.borderRadius,
+      this.border,
+      this.shadow,
+      this.semanticLabel,
+      this.onAnimationCompleted})
+      : super(key: key);
 
   @override
   _GButtonState createState() => _GButtonState();
@@ -196,16 +195,16 @@ class _GButtonState extends State<GButton> {
         color: widget.backgroundColor,
         gradient: widget.backgroundGradient,
         curve: widget.curve,
-        icon: widget.leading ??
-            Icon(widget.icon,
-                color:
-                    widget.active ? widget.iconActiveColor : widget.iconColor,
-                size: widget.iconSize),
+        icon: widget.active
+            ? (widget.activeLeading ?? widget.leading)
+            : widget.leading ??
+                Icon(widget.icon,
+                    color: widget.active ? widget.iconActiveColor : widget.iconColor, size: widget.iconSize),
         text: Text(
           widget.text,
-          style: widget.textStyle ??
-              TextStyle(fontWeight: FontWeight.w600, color: widget.textColor),
+          style: widget.textStyle ?? TextStyle(fontWeight: FontWeight.w600, color: widget.textColor),
         ),
+        onAnimationCompleted: widget.onAnimationCompleted,
       ),
     );
   }
@@ -229,7 +228,8 @@ class Button extends StatefulWidget {
       this.gradient,
       this.borderRadius = const BorderRadius.all(Radius.circular(100.0)),
       this.border,
-      this.shadow})
+      this.shadow,
+      this.onAnimationCompleted})
       : super(key: key);
 
   final Widget icon;
@@ -248,6 +248,7 @@ class Button extends StatefulWidget {
   final BorderRadius borderRadius;
   final Border border;
   final List<BoxShadow> shadow;
+  final VoidCallback onAnimationCompleted;
 
   @override
   _ButtonState createState() => _ButtonState();
@@ -264,30 +265,29 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
     super.initState();
     _expanded = widget.active;
 
-    expandController =
-        AnimationController(vsync: this, duration: widget.duration);
-    animation = CurvedAnimation(
-        parent: expandController,
-        curve: widget.curve,
-        reverseCurve: widget.curve.flipped
+    expandController = AnimationController(vsync: this, duration: widget.duration);
+    animation = CurvedAnimation(parent: expandController, curve: widget.curve, reverseCurve: widget.curve.flipped
         // curve: Cubic(0.25, 1.03, 0.31, 0.92),
         // reverseCurve: Cubic(0.77, 0.67, 0, 10).flipped
 
-        );
+        )
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          Scrollable.ensureVisible(context, alignment: 0.5, duration: Duration(milliseconds: 300));
+        }
+      });
   }
 
   @override
   void dispose() {
     expandController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     TextDirection currentDirection = Directionality.of(context);
-    double computePaddingForIcon =
-        ((widget.text.data.isEmpty) ? 0 : widget.gap + widget.iconSize);
+    double computePaddingForIcon = ((widget.text.data.isEmpty) ? 0 : widget.gap + widget.iconSize);
 
     _expanded = !widget.active;
     if (_expanded)
@@ -306,9 +306,7 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
           // padding: EdgeInsets.symmetric(horizontal: 5),
           padding: widget.padding,
           // curve: Curves.easeOutQuad,
-          duration: Duration(
-              milliseconds:
-                  (widget.duration.inMilliseconds.toInt() / 2).round()),
+          duration: Duration(milliseconds: (widget.duration.inMilliseconds.toInt() / 2).round()),
           decoration: BoxDecoration(
             boxShadow: widget.shadow,
             border: widget.border,
@@ -326,8 +324,7 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
             Row(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: widget.padding.vertical / 2),
+                  padding: EdgeInsets.symmetric(vertical: widget.padding.vertical / 2),
                   child: widget.icon,
                 ),
               ],
@@ -335,9 +332,7 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
             SizedBox(
               child: Row(
                 children: <Widget>[
-                  SizedBox(
-                      height: widget.iconSize + widget.padding.vertical,
-                      width: 0),
+                  SizedBox(height: widget.iconSize + widget.padding.vertical, width: 0),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -349,18 +344,11 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
                           opacity: _expanded ? 0.0 : 1.0,
                           curve: _expanded ? Curves.easeOut : Curves.easeInQuad,
                           duration: Duration(
-                              milliseconds:
-                                  (widget.duration.inMilliseconds.toInt() /
-                                          (_expanded ? 8.5 : 1.5))
-                                      .round()),
+                              milliseconds: (widget.duration.inMilliseconds.toInt() / (_expanded ? 8.5 : 1.5)).round()),
                           child: Container(
                               margin: EdgeInsets.only(
-                                  right: currentDirection == TextDirection.rtl
-                                      ? computePaddingForIcon
-                                      : 0,
-                                  left: currentDirection == TextDirection.ltr
-                                      ? computePaddingForIcon
-                                      : 0),
+                                  right: currentDirection == TextDirection.rtl ? computePaddingForIcon : 0,
+                                  left: currentDirection == TextDirection.ltr ? computePaddingForIcon : 0),
                               alignment: Alignment.centerRight,
                               child: widget.text),
                         ),
@@ -379,9 +367,7 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
                       Row(
                         children: <Widget>[
                           Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: widget.padding.vertical / 2),
-                              child: widget.icon),
+                              padding: EdgeInsets.symmetric(vertical: widget.padding.vertical / 2), child: widget.icon),
                           SizeTransition(
                             axis: Axis.horizontal,
                             axisAlignment: 1,
@@ -390,10 +376,8 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
                               opacity: 0, // debug use
                               child: Container(
                                   color: Colors.red.withOpacity(.2),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: (widget.text.data.isEmpty)
-                                          ? 0
-                                          : widget.gap),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: (widget.text.data.isEmpty) ? 0 : widget.gap),
                                   child: widget.text),
                             ),
                           ),
