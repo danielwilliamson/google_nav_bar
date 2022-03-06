@@ -5,6 +5,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'measure_size.dart';
 
+export 'src/gnav.dart';
+export 'src/gbutton.dart';
+
 class GNav extends StatefulWidget {
   const GNav({
     Key key,

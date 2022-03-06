@@ -1,3 +1,23 @@
+## 5.0.5
+* Fixed GButton onPressed not working
+
+## 5.0.4
+* Updated example
+
+## 5.0.3
+* Empty out the test file
+
+## 5.0.2
+* Use didUpdateWidget to set selectedIndex when rebuilding (thanks to JagandeepBrar)
+
+## 5.0.1
+* Null safety migration (thanks to Ascenio)
+* Excluded example folder for publishing
+
+## 4.0.1
+* Reworked animations
+* Customizable border
+
 ## 3.2.0
 
 * Added customizable button border style and shadow
