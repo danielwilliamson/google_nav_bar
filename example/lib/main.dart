@@ -19,8 +19,7 @@ class Example extends StatefulWidget {
 
 class _ExampleState extends State<Example> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Home',
@@ -65,8 +64,6 @@ class _ExampleState extends State<Example> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: Colors.grey[300]!,
-              hoverColor: Colors.grey[100]!,
               gap: 8,
               activeColor: Colors.black,
               iconSize: 24,

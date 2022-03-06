@@ -31,13 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int badge = 0;
 
   List<GButton> tabs = [];
-  List<Color> colors = [
-    Colors.purple,
-    Colors.pink,
-    Colors.amber[600]!,
-    Colors.teal,
-    Colors.lightBlue
-  ];
+  List<Color> colors = [Colors.purple, Colors.pink, Colors.amber[600]!, Colors.teal, Colors.lightBlue];
 
   @override
   void initState() {
@@ -75,19 +69,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 22),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 22),
                   child: GNav(
                     gap: 10,
                     color: Colors.grey[600],
                     activeColor: Colors.white,
-                    rippleColor: Colors.grey[800]!,
-                    hoverColor: Colors.grey[700]!,
                     iconSize: 20,
                     textStyle: TextStyle(fontSize: 16, color: Colors.white),
                     tabBackgroundColor: Colors.grey[900]!,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 16.5),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16.5),
                     duration: Duration(milliseconds: 800),
                     tabs: [
                       GButton(
@@ -125,19 +115,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 22),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 22),
                   child: GNav(
-                    tabActiveBorder: Border.all(color: Colors.black),
                     gap: 10,
                     color: Colors.grey[600],
                     activeColor: Colors.black,
-                    rippleColor: Colors.grey[300]!,
-                    hoverColor: Colors.grey[100]!,
                     iconSize: 20,
                     textStyle: TextStyle(fontSize: 16, color: Colors.black),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 14.5),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14.5),
                     duration: Duration(milliseconds: 800),
                     tabs: [
                       GButton(
@@ -152,8 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             : Badge(
                                 badgeColor: Colors.red.shade100,
                                 elevation: 0,
-                                position:
-                                    BadgePosition.topEnd(top: -12, end: -12),
+                                position: BadgePosition.topEnd(top: -12, end: -12),
                                 badgeContent: Text(
                                   badge.toString(),
                                   style: TextStyle(color: Colors.red.shade900),
@@ -161,9 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Icon(
                                   LineIcons.heart,
                                   size: 20,
-                                  color: selectedIndex == 1
-                                      ? Colors.pink
-                                      : Colors.black,
+                                  color: selectedIndex == 1 ? Colors.pink : Colors.black,
                                 ),
                               ),
                       ),
@@ -176,8 +158,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: 'Now!',
                         leading: CircleAvatar(
                           radius: 12,
-                          backgroundImage: NetworkImage(
-                              'https://sooxt98.space/content/images/size/w100/2019/01/profile.png'),
+                          backgroundImage:
+                              NetworkImage('https://sooxt98.space/content/images/size/w100/2019/01/profile.png'),
                         ),
                       ),
                     ],
@@ -189,8 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 decoration: BoxDecoration(color: Colors.white),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 22.0, vertical: 14),
+                  padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 14),
                   child: GNav(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                     duration: Duration(milliseconds: 800),
@@ -241,8 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 decoration: BoxDecoration(color: Colors.white),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 22),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 22),
                   child: GNav(
                     tabBackgroundGradient: LinearGradient(
                       begin: Alignment.topRight,
@@ -250,14 +230,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       colors: [Colors.lightBlue[100]!, Colors.cyan],
                     ),
                     gap: 8,
-                    tabBorderRadius: 15,
                     color: Colors.grey[600],
                     activeColor: Colors.white,
                     iconSize: 16,
                     textStyle: TextStyle(fontSize: 12, color: Colors.white),
                     tabBackgroundColor: Colors.grey[800]!,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 16.5),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16.5),
                     duration: Duration(milliseconds: 800),
                     tabs: [
                       GButton(
