@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 
 void main() => runApp(TabPage());
 
@@ -18,12 +18,7 @@ class _TabPageState extends State<TabPage> {
 
   PageController controller = PageController();
 
-  List<Color> colors = [
-    Colors.purple,
-    Colors.pink,
-    Colors.amber[600]!,
-    Colors.teal
-  ];
+  List<Color> colors = [Colors.purple, Colors.pink, Colors.amber[600]!, Colors.teal];
 
   @override
   void initState() {
@@ -36,7 +31,6 @@ class _TabPageState extends State<TabPage> {
       home: Scaffold(
         extendBody: true,
         appBar: AppBar(
-          brightness: Brightness.light,
           title: Text(
             'GoogleNavBar',
             style: TextStyle(color: Colors.black),
@@ -99,19 +93,17 @@ class _TabPageState extends State<TabPage> {
                     icon: LineIcons.heart,
                     leading: selectedIndex == 1 || badge == 0
                         ? null
-                        : Badge(
+                        : badges.Badge(
                             badgeColor: Colors.red.shade100,
                             elevation: 0,
-                            position: BadgePosition.topEnd(top: -12, end: -12),
+                            position: badges.BadgePosition.topEnd(top: -12, end: -12),
                             badgeContent: Text(
                               badge.toString(),
                               style: TextStyle(color: Colors.red.shade900),
                             ),
                             child: Icon(
                               LineIcons.heart,
-                              color: selectedIndex == 1
-                                  ? Colors.pink
-                                  : Colors.black,
+                              color: selectedIndex == 1 ? Colors.pink : Colors.black,
                             ),
                           ),
                     text: 'Likes',

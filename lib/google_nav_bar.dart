@@ -1,9 +1,6 @@
 library google_nav_bar;
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'measure_size.dart';
 
 enum GnavStyle {
   google,

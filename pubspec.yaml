@@ -1,15 +1,15 @@
 name: google_nav_bar
 description: A modern google style nav bar which could be use as a bottom navigation bar or tabbar, the design strictly follows the cuberto UI/UX on dribbble.
-version: 5.0.5
+version: 5.0.6
 homepage: https://github.com/sooxt98/google_nav_bar
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  scrollable_positioned_list: ^0.2.3
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -134,10 +134,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: 'This',
                         leading: selectedIndex == 1 || badge == 0
                             ? null
-                            : Badge(
+                            : badges.Badge(
                                 badgeColor: Colors.red.shade100,
                                 elevation: 0,
-                                position: BadgePosition.topEnd(top: -12, end: -12),
+                                position: badges.BadgePosition.topEnd(top: -12, end: -12),
                                 badgeContent: Text(
                                   badge.toString(),
                                   style: TextStyle(color: Colors.red.shade900),
